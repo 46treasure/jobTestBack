@@ -5,18 +5,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Download implements Runnable {
 
+    UUID id = UUID.randomUUID();
     private ArrayList<String> urls;
-    private File file;
-    
+
     public Download() {
     }
 
-    public Download(ArrayList<String> urls, File file) {
+    public Download(ArrayList<String> urls) {
         this.urls = urls;
-        this.file = file;
     }
 
     public ArrayList<String> getUrls() {
@@ -27,33 +27,26 @@ public class Download implements Runnable {
         this.urls = urls;
     }
 
-    public File getFile() {
-        return file;
-    }
 
-    public void setFile(File file) {
-        this.file = file;
-    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Download download = (Download) o;
-        return Objects.equals(urls, download.urls) &&
-                Objects.equals(file, download.file);
+        return Objects.equals(urls, download.urls);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(urls, file);
+        return Objects.hash(urls);
     }
 
     @Override
     public String toString() {
         return "Download{" +
                 "urls=" + urls +
-                ", file=" + file +
                 '}';
     }
 
@@ -62,9 +55,10 @@ public class Download implements Runnable {
         try {
             for (int i = 0; i < this.urls.size(); i++) {
                 URL url = new URL(this.urls.get(i));
+                File file = new File(System.getProperty("user.home") + File.separator + "Desktop" + File.separator + this.id + ".png");
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
                 BufferedInputStream in = new BufferedInputStream(http.getInputStream());
-                    FileOutputStream fos = new FileOutputStream(this.file);
+                    FileOutputStream fos = new FileOutputStream(file);
                     BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
                     byte[] buffer = new byte[1024];
                     int read = 0;

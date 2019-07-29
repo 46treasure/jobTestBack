@@ -19,7 +19,7 @@ public class MainController {
     @CrossOrigin("http://localhost:4200")
     public void download(@RequestBody ArrayList<String> urls){
         System.out.println(urls);
-        new Thread(new Download(urls, file)).start();
+        new Thread(new Download(urls)).start();
     }
 
  }
