@@ -9,10 +9,6 @@ import java.util.*;
 @RestController
 public class MainController {
 
-    UUID id = UUID.randomUUID();
-
-
-    File file = new File(System.getProperty("user.home") + File.separator + "Desktop" + File.separator + this.id + ".png");
 
 
     @PostMapping("/")

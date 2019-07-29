@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -55,7 +56,10 @@ public class Download implements Runnable {
         try {
             for (int i = 0; i < this.urls.size(); i++) {
                 URL url = new URL(this.urls.get(i));
-                File file = new File(System.getProperty("user.home") + File.separator + "Desktop" + File.separator + this.id + ".png");
+                String[] splited = url.getFile().split("/");
+                System.out.println(Arrays.toString(splited));
+                String substring = splited[splited.length - 1].substring(0, 4);
+                File file = new File(System.getProperty("user.home") + File.separator + "Desktop" + File.separator + substring + ".png");
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
                 BufferedInputStream in = new BufferedInputStream(http.getInputStream());
                     FileOutputStream fos = new FileOutputStream(file);
